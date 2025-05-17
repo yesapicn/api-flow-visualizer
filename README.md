@@ -1,0 +1,149 @@
+# API Flow Visualizer
+
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/api-flow-visualizer/pulls)
+  
+一个开源的 API 流程可视化编排组件，帮助开发者直观地可视化编排和管理 API 工作流逻辑，最终生成可支持的PHP代码。
+  
+> 本项目 99.9%的代码由AI（[Cursor](https://www.cursor.com/)编辑器）编写，可能是首个使用AI开发的开源前端项目。  
+
+</div>
+
+## 在线演示Demo
+YesApi接口工作流可视化编排 Demo：https://www.yesapi.cn//api-flow/demo.html  
+
+示例截图：  
+![](./examples/yesapi-flow-demo-snaptshot.png)  
+
+变量打印：  
+![](./examples/img/变量打印.png)  
+
+数据库操作：  
+![](./examples/img/数据库操作.png)  
+
+条件判断：  
+![](./examples/img/条件判断.png)  
+
+循环引用：  
+![](./examples/img/循环引用.png)  
+
+## ✨ 核心特性
+
+- 🎨 可视化流程编排
+- 🔄 流程控制：开始节点、结束节点
+- 📦 业务逻辑：变量赋值、IF选择器、循环、代码、打印变量
+- 🛠 数据库：新增数据、更新数据、查询数据、删除数据
+- 📱 导入/导出 JSON数据，方便保存和重新编辑
+- 🌐 预览和生成PHP代码，基于[PhalApi](https://www.phalapi.net/)开源接口框架（可自行改造成自己的PHP框架）
+
+## 📦 运行
+
+```bash
+# npm安装
+$ npm install
+
+# 本地运行
+$ npm run dev
+
+# 打包成组件（生成dist目录）
+$ npm run build:lib
+```
+
+## 🚀 快速使用
+```html
+<!-- 引入打包后的文件 -->
+<link href="./api-flow-visualizer.css" rel="stylesheet">
+<script src="./api-flow-visualizer.umd.js"></script>
+
+<!-- 可视化编排 -->
+<div id="flow-editor"></div>
+
+<script>
+const EditorClass = window.ApiFlowVisualizer.default || window.ApiFlowVisualizer;
+editor = new EditorClass({
+  container: document.getElementById('flow-editor'),
+  initialData: {},
+  onSave: (json) => { console.log('保存的数据:', json); },
+  onGenerateCode: (phpCode) => { console.log('生成的 PHP 代码:', phpCode); }
+});
+</script>
+```
+
+> TODO：npm 包使用的方式待提供。
+
+## 📚 文档
+
+### API接口
+
+```typescript
+class ApiFlowVisualizer {
+  // 获取当前 JSON 数据
+  getJson(): any;
+  
+  // 生成 PHP 代码
+  generatePhpCode(): string;
+  
+  // 设置数据
+  setData(json: any): void;
+  
+  // 销毁实例
+  destroy(): void;
+}
+```
+
+## 🛠 前端技术栈
+
+- [ReactFlow](https://reactflow.dev/)
+- [Ant Design](https://ant.design/components/overview/)
+- Node v18.20.4
+- React 18
+- TypeScript
+- Vite
+- ESLint
+- Prettier
+
+## 🛠 项目开发计划
+
+ - 20250517：第一版MVP开源，用AI完成框架搭建以及核心基础功能的开发；  
+ - TODO：npm包的打包方式
+ - TODO：循环体的可视化编排，支持画布嵌套以及PHP代码生成引擎的调整；
+ - TODO：IF判断节点的可视化编排，支持画布嵌套以及PHP代码生成引擎的调整；
+ - TODO：数据库操作联动动态的数据库表和表字段数据；
+
+## 🤝 贡献指南
+
+我们欢迎所有形式的贡献，无论是新功能、bug 修复还是文档改进。
+
+1. Fork 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启一个 Pull Request
+
+## 📄 开源协议
+
+本项目基于 [MIT](./LICENSE) 协议开源。
+
+## 👥 贡献者
+
+感谢所有为本项目做出贡献的开发者！
+
+<a href="https://github.com/yourusername/api-flow-visualizer/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=yourusername/api-flow-visualizer" />
+</a>
+
+## 📞 联系我们
+
+- 项目维护者：DogstarHuang
+- 邮箱：chanzonghuang@gmail.com
+- 微信：
+![](./dogtarhuang.jpg)  
+
+## ⭐ 支持我们
+
+如果这个项目对你有帮助，欢迎给我们一个 star ⭐️
+
+
+

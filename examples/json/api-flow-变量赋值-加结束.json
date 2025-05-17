@@ -1,0 +1,238 @@
+{
+  "nodes": [
+    {
+      "id": "1747388735972_t9fa",
+      "type": "var",
+      "position": {
+        "x": 254.22087871374322,
+        "y": 362.21022720980716
+      },
+      "data": {
+        "label": "变量赋值-整数",
+        "type": "var",
+        "varName": "f",
+        "varType": "integer",
+        "expression": "1"
+      },
+      "width": 120,
+      "height": 60,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 254.22087871374322,
+        "y": 362.21022720980716
+      }
+    },
+    {
+      "id": "1747388823964_0bqy",
+      "type": "var",
+      "position": {
+        "x": 299.4985505287096,
+        "y": 449.98614295244175
+      },
+      "data": {
+        "label": "变量赋值-字符串长长长长长",
+        "type": "var",
+        "varName": "f2",
+        "varType": "string",
+        "expression": "abc"
+      },
+      "width": 203,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 299.4985505287096,
+        "y": 449.98614295244175
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747388843926_eys1",
+      "type": "var",
+      "position": {
+        "x": 387.86005347949543,
+        "y": 541.1020844229233
+      },
+      "data": {
+        "label": "订单金额-浮点数",
+        "type": "var",
+        "varName": "money",
+        "varType": "float",
+        "expression": "434.4"
+      },
+      "width": 128,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 387.86005347949543,
+        "y": 541.1020844229233
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747388915996_j7jf",
+      "type": "var",
+      "position": {
+        "x": 574.6320952374867,
+        "y": 550.9992788201464
+      },
+      "data": {
+        "label": "变量赋值-数组",
+        "type": "var",
+        "varName": "arr",
+        "varType": "array",
+        "expression": "[1,2,3];"
+      },
+      "width": 120,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 574.6320952374867,
+        "y": 550.9992788201464
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747389063638_1gvg",
+      "type": "var",
+      "position": {
+        "x": 726.799973235723,
+        "y": 544.7733724264995
+      },
+      "data": {
+        "label": "变量赋值-表达式",
+        "type": "var",
+        "varName": "money2",
+        "varType": "exp",
+        "expression": "$money + 100"
+      },
+      "width": 174,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 726.799973235723,
+        "y": 544.7733724264995
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747389310420_tcua",
+      "type": "start",
+      "position": {
+        "x": 270.22054116901415,
+        "y": 281.6729753178916
+      },
+      "data": {
+        "label": "开始",
+        "type": "start"
+      },
+      "width": 64,
+      "height": 64,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 270.22054116901415,
+        "y": 281.6729753178916
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747389312679_8d71",
+      "type": "end",
+      "position": {
+        "x": 911.0856547170099,
+        "y": 633.4208794572736
+      },
+      "data": {
+        "label": "结束2",
+        "type": "end",
+        "returnType": "var",
+        "expression": "1231",
+        "outputVars": [
+          {
+            "varName": "g",
+            "value": "1"
+          },
+          {
+            "varName": "2",
+            "value": "33"
+          }
+        ]
+      },
+      "width": 180,
+      "height": 151,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 911.0856547170099,
+        "y": 633.4208794572736
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1747389310420_tcua",
+      "sourceHandle": null,
+      "target": "1747388735972_t9fa",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747389310420_tcua-1747388735972_t9fa"
+    },
+    {
+      "source": "1747388735972_t9fa",
+      "sourceHandle": null,
+      "target": "1747388823964_0bqy",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747388735972_t9fa-1747388823964_0bqy"
+    },
+    {
+      "source": "1747388823964_0bqy",
+      "sourceHandle": null,
+      "target": "1747388843926_eys1",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747388823964_0bqy-1747388843926_eys1"
+    },
+    {
+      "source": "1747388843926_eys1",
+      "sourceHandle": null,
+      "target": "1747388915996_j7jf",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747388843926_eys1-1747388915996_j7jf"
+    },
+    {
+      "source": "1747388915996_j7jf",
+      "sourceHandle": null,
+      "target": "1747389063638_1gvg",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747388915996_j7jf-1747389063638_1gvg"
+    },
+    {
+      "source": "1747389063638_1gvg",
+      "sourceHandle": null,
+      "target": "1747389312679_8d71",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747389063638_1gvg-1747389312679_8d71"
+    }
+  ],
+  "viewport": {
+    "x": -396.0502495753303,
+    "y": -472.5916648143034,
+    "zoom": 0.9734062653883118
+  }
+}

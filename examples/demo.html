@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="YesApi接口编排可视化Demo，支持流程设计、JSON导入导出、PHP代码生成。">
+  <title>Demo-YesApi接口工作流可视化编排</title>
+  <link href="./api-flow-visualizer.css" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Arial', sans-serif; background: #f7f8fa; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { flex: 0 0 180px; width: 180px !important; min-width: 180px; max-width: 180px; background: #ddd; border-right: 1px solid #eee; padding: 24px 0 0 0; box-sizing: border-box; }
+    .sidebar h3 { text-align: center; font-size: 18px; margin-bottom: 16px; color: #222; }
+    .demo-list { list-style: none; padding: 0 16px; margin: 0; }
+    .demo-list li { margin-bottom: 8px; }
+    .demo-btn { width: 100%; padding: 8px 12px; border: none; background: #f2f4f8; color: #333; border-radius: 4px; cursor: pointer; text-align: left; transition: background 0.2s; font-size: 15px; }
+    .demo-btn.active, .demo-btn:hover { background: #1890ff; color: #fff; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .header { padding: 18px 32px 10px 32px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 22px; margin: 0; color: #222; letter-spacing: 1px; }
+    .actions { display: flex; gap: 12px; }
+    .action-btn { padding: 7px 18px; border: none; border-radius: 4px; background: #1890ff; color: #fff; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+    .action-btn:hover { background: #40a9ff; }
+    #flow-editor { flex: 1; min-height: 0; background: #f7f8fa; }
+    @media (max-width: 700px) { .container { flex-direction: column; } .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #eee; } .main { flex: none; } }
+  </style>
+  <script src="./api-flow-visualizer.umd.js"></script>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Demo 切换</h3>
+      <ul class="demo-list" id="demoList">
+        <!-- 动态插入demo菜单 -->
+      </ul>
+    </aside>
+    <div class="main">
+      <div class="header">
+        <h1>YesApi接口工作流可视化编排 Demo</h1>
+        <!-- <div class="actions">
+          <button class="action-btn" onclick="exportJson()">导出JSON</button>
+          <button class="action-btn" onclick="importJson()">导入JSON</button>
+          <button class="action-btn" onclick="generatePhpCode()">生成PHP代码</button>
+        </div> -->
+      </div>
+      <div id="flow-editor"></div>
+    </div>
+  </div>
+  <script>
+    // Demo JSON 文件列表
+    const demoFiles = [
+      '基本流程',
+      '变量赋值',
+      '变量打印',
+      '条件判断',
+      '循环引用',
+      '数据库操作',
+    ];
+    const demoDir = './json/';
+    let currentDemo = '';
+    let editor;
+
+    // 渲染 Demo 菜单
+    function renderDemoList() {
+      const ul = document.getElementById('demoList');
+      ul.innerHTML = '';
+      demoFiles.forEach(file => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        const img = document.createElement('img');
+        img.src = './img/' + file + '.png';
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.borderRadius = '4px';
+        img.style.marginBottom = '8px';
+        img.style.cursor = 'pointer';
+        img.style.objectFit = 'cover';
+        img.onclick = () => loadDemo(file);
+
+        btn.className = 'demo-btn' + (file === currentDemo ? ' active' : '');
+        btn.textContent = file.replace('.json', '');
+        btn.onclick = () => loadDemo(file);
+        li.appendChild(btn);
+        ul.appendChild(li);
+        li.appendChild(img);
+      });
+    }
+
+    // 加载 Demo JSON
+    async function loadDemo(file) {
+      console.log(file);
+      try {
+        const jsonMap = {
+          基本流程: '{"nodes":[{"id":"start-1","type":"start","position":{"x":300,"y":100 },"data":{"label":"开始","type":"start","params":[]},"width":84,"height":74,"selected":false,"dragging":false,"positionAbsolute":{"x":300,"y":100 }},{"id":"1747465997649_jmkj","type":"loop","position":{"x":356.11002387857246,"y":355.0640892569152 },"data":{"label":"循环","type":"loop","loopType":"count","loopVar":"a","subNodes":[],"subEdges":[],"loopCount":10 },"width":127,"height":70,"selected":false,"dragging":false,"positionAbsolute":{"x":356.11002387857246,"y":355.0640892569152 }},{"id":"1747466009169_hpvc","type":"loop","position":{"x":297.2161740597094,"y":220.25744429337686 },"data":{"label":"循环","type":"loop","loopType":"array","dataSource":"aaa","loopVar":"b","subNodes":[],"subEdges":[],"isRef":true },"width":155,"height":70,"selected":false,"positionAbsolute":{"x":297.2161740597094,"y":220.25744429337686 },"dragging":false },{"id":"1747466053837_i8xg","type":"end","position":{"x":234.1039971760847,"y":554.5832195202502 },"data":{"label":"结束","type":"end"},"width":180,"height":128,"selected":false,"positionAbsolute":{"x":234.1039971760847,"y":554.5832195202502 },"dragging":false },{"id":"1747466069867_b869","type":"var","position":{"x":64.84371967890871,"y":204.77058380794216 },"data":{"label":"变量赋值","type":"var","varName":"a","varType":"integer","expression":"1"},"width":120,"height":60,"selected":false,"positionAbsolute":{"x":64.84371967890871,"y":204.77058380794216 },"dragging":false },{"id":"1747466071908_zz9b","type":"var","position":{"x":71.19135199177822,"y":295.88310043964816 },"data":{"label":"变量赋值","type":"var","varName":"b","varType":"string","expression":"b"},"width":120,"height":60,"selected":false,"positionAbsolute":{"x":71.19135199177822,"y":295.88310043964816 },"dragging":false },{"id":"1747466916062_5s8p","type":"if","position":{"x":538.7491784383177,"y":435.37338939436336 },"data":{"label":"IF选择器","type":"if","condition":"$a > 0","ifTrue":"$a = 1;","ifFalse":"$a = false;"},"width":90,"height":90,"selected":false,"positionAbsolute":{"x":538.7491784383177,"y":435.37338939436336 },"dragging":false },{"id":"1747467780058_3iae","type":"var","position":{"x":68.3327070492083,"y":385.7779287561633 },"data":{"label":"变量赋值","type":"var","varName":"ff","varType":"float"},"width":120,"height":60,"selected":false,"positionAbsolute":{"x":68.3327070492083,"y":385.7779287561633 },"dragging":false },{"id":"1747467783873_jwap","type":"var","position":{"x":57.771403032675266,"y":495.83631404102834 },"data":{"label":"变量赋值","type":"var","varName":"boolean2","varType":"boolean","expression":"true"},"width":172,"height":60,"selected":false,"positionAbsolute":{"x":57.771403032675266,"y":495.83631404102834 },"dragging":false },{"id":"1747467786756_qm4a","type":"var","position":{"x":42.9099987564461,"y":593.7059931981469 },"data":{"label":"变量赋值","type":"var","varName":"arr","varType":"array"},"width":120,"height":60,"selected":false,"positionAbsolute":{"x":42.9099987564461,"y":593.7059931981469 },"dragging":false },{"id":"1747467789918_8e73","type":"var","position":{"x":13.274094449557367,"y":680.7053564140533 },"data":{"label":"变量赋值","type":"var","varName":"exxxxx","varType":"exp","expression":"1+2;"},"width":131,"height":60,"selected":false,"positionAbsolute":{"x":13.274094449557367,"y":680.7053564140533 },"dragging":false },{"id":"1747468095018_psa6","type":"print_var","position":{"x":-109.79174765206201,"y":591.526844834111 },"data":{"label":"打印变量","type":"print_var","varName":"arr"},"width":120,"height":74,"selected":false,"positionAbsolute":{"x":-109.79174765206201,"y":591.526844834111 },"dragging":false },{"id":"1747468330612_uh4h","type":"code","position":{"x":473.82986007905436,"y":617.031436473301 },"data":{"label":"代码","type":"code","phpCode":"$aaa = 123;"},"width":122,"height":82,"selected":true,"positionAbsolute":{"x":473.82986007905436,"y":617.031436473301 },"dragging":false }],"edges":[{"source":"1747466009169_hpvc","sourceHandle":null,"target":"1747465997649_jmkj","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466009169_hpvc-1747465997649_jmkj"},{"source":"start-1","sourceHandle":null,"target":"1747466069867_b869","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-start-1-1747466069867_b869"},{"source":"1747466069867_b869","sourceHandle":null,"target":"1747466071908_zz9b","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466069867_b869-1747466071908_zz9b"},{"source":"1747465997649_jmkj","sourceHandle":null,"target":"1747466916062_5s8p","targetHandle":"left","markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747465997649_jmkj-1747466916062_5s8pleft"},{"source":"1747466071908_zz9b","sourceHandle":null,"target":"1747467780058_3iae","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466071908_zz9b-1747467780058_3iae"},{"source":"1747467780058_3iae","sourceHandle":null,"target":"1747467783873_jwap","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747467780058_3iae-1747467783873_jwap"},{"source":"1747467783873_jwap","sourceHandle":null,"target":"1747467786756_qm4a","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747467783873_jwap-1747467786756_qm4a"},{"source":"1747467789918_8e73","sourceHandle":null,"target":"1747466009169_hpvc","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747467789918_8e73-1747466009169_hpvc"},{"source":"1747467786756_qm4a","sourceHandle":null,"target":"1747468095018_psa6","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747467786756_qm4a-1747468095018_psa6"},{"source":"1747468095018_psa6","sourceHandle":null,"target":"1747467789918_8e73","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747468095018_psa6-1747467789918_8e73"},{"source":"1747466916062_5s8p","sourceHandle":null,"target":"1747468330612_uh4h","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466916062_5s8p-1747468330612_uh4h"},{"source":"1747468330612_uh4h","sourceHandle":null,"target":"1747466053837_i8xg","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747468330612_uh4h-1747466053837_i8xg"}],"viewport":{"x":258.4620801931548,"y":-92.27872012983607,"zoom":0.9331476673922376 }}',
+          变量赋值: '{"nodes":[{"id":"1747388735972_t9fa","type":"var","position":{"x":254.22087871374322,"y":362.21022720980716 },"data":{"label":"变量赋值-整数","type":"var","varName":"f","varType":"integer","expression":"1"},"width":136,"height":72,"selected":false,"dragging":false,"positionAbsolute":{"x":254.22087871374322,"y":362.21022720980716 }},{"id":"1747388823964_0bqy","type":"var","position":{"x":299.4985505287096,"y":449.98614295244175 },"data":{"label":"变量赋值-字符串长长长长长","type":"var","varName":"f2","varType":"string","expression":"abc"},"width":205,"height":72,"selected":false,"positionAbsolute":{"x":299.4985505287096,"y":449.98614295244175 },"dragging":false },{"id":"1747388843926_eys1","type":"var","position":{"x":387.86005347949543,"y":541.1020844229233 },"data":{"label":"订单金额-浮点数","type":"var","varName":"money","varType":"float","expression":"434.4"},"width":146,"height":72,"selected":false,"positionAbsolute":{"x":387.86005347949543,"y":541.1020844229233 },"dragging":false },{"id":"1747388915996_j7jf","type":"var","position":{"x":574.6320952374867,"y":550.9992788201464 },"data":{"label":"变量赋值-数组","type":"var","varName":"arr","varType":"array","expression":"[1,2,3];"},"width":136,"height":72,"selected":false,"positionAbsolute":{"x":574.6320952374867,"y":550.9992788201464 },"dragging":false },{"id":"1747389063638_1gvg","type":"var","position":{"x":726.799973235723,"y":544.7733724264995 },"data":{"label":"变量赋值-表达式","type":"var","varName":"money2","varType":"exp","expression":"$money + 100"},"width":198,"height":72,"selected":false,"positionAbsolute":{"x":726.799973235723,"y":544.7733724264995 },"dragging":false },{"id":"1747389310420_tcua","type":"start","position":{"x":423.72054116901415,"y":264.1729753178916 },"data":{"label":"开始","type":"start"},"width":92,"height":92,"selected":true,"positionAbsolute":{"x":423.72054116901415,"y":264.1729753178916 },"dragging":false },{"id":"1747389312679_8d71","type":"end","position":{"x":911.0856547170099,"y":633.4208794572736 },"data":{"label":"结束2","type":"end","returnType":"var","expression":"1231","outputVars":[{"varName":"g","value":"1"},{"varName":"2","value":"33"}]},"width":206,"height":153,"selected":false,"positionAbsolute":{"x":911.0856547170099,"y":633.4208794572736 },"dragging":false }],"edges":[{"source":"1747389310420_tcua","sourceHandle":null,"target":"1747388735972_t9fa","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747389310420_tcua-1747388735972_t9fa"},{"source":"1747388735972_t9fa","sourceHandle":null,"target":"1747388823964_0bqy","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747388735972_t9fa-1747388823964_0bqy"},{"source":"1747388823964_0bqy","sourceHandle":null,"target":"1747388843926_eys1","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747388823964_0bqy-1747388843926_eys1"},{"source":"1747388843926_eys1","sourceHandle":null,"target":"1747388915996_j7jf","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747388843926_eys1-1747388915996_j7jf"},{"source":"1747388915996_j7jf","sourceHandle":null,"target":"1747389063638_1gvg","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747388915996_j7jf-1747389063638_1gvg"},{"source":"1747389063638_1gvg","sourceHandle":null,"target":"1747389312679_8d71","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747389063638_1gvg-1747389312679_8d71"}],"viewport":{"x":-237.14727599137302,"y":-224.14327865996603,"zoom":1.072858196649915 }}',
+          变量打印: '{"nodes":[{"id":"start-1","type":"start","position":{"x":300,"y":100 },"data":{"label":"开始","type":"start","params":[{"paramName":"aa","varName":"dd"},{"paramName":"ee","varName":"ee"}]},"width":163,"height":142,"selected":false,"dragging":false,"positionAbsolute":{"x":300,"y":100 }},{"id":"1747410835384_61c6","type":"print_var","position":{"x":351.24699231099044,"y":276.71903060902696 },"data":{"label":"打印变量","type":"print_var","varName":"aa"},"width":120,"height":74,"selected":false,"dragging":false,"positionAbsolute":{"x":351.24699231099044,"y":276.71903060902696 }},{"id":"1747411125075_im2c","type":"end","position":{"x":418.55529676462663,"y":399.0192787543265 },"data":{"label":"结束","type":"end","returnType":"var","outputVars":[{"varName":"aa","value":"$a"}]},"width":180,"height":128,"selected":true,"positionAbsolute":{"x":418.55529676462663,"y":399.0192787543265 },"dragging":false }],"edges":[{"source":"start-1","sourceHandle":null,"target":"1747410835384_61c6","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-start-1-1747410835384_61c6"},{"source":"1747410835384_61c6","sourceHandle":null,"target":"1747411125075_im2c","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747410835384_61c6-1747411125075_im2c"}],"viewport":{"x":3.890648147141519,"y":-41.53267094107639,"zoom":1.0059425945351026 }}',
+          条件判断: '{"nodes":[{"id":"1747390390837_5387","type":"start","position":{"x":213.12478048529698,"y":61.55257100901585 },"data":{"label":"开始","type":"start"},"width":64,"height":64,"selected":false,"positionAbsolute":{"x":213.12478048529698,"y":61.55257100901585 },"dragging":false },{"id":"1747390392236_u2uz","type":"end","position":{"x":182.2626881166841,"y":327.78398627157037 },"data":{"label":"结束","type":"end"},"width":64,"height":64,"selected":false,"positionAbsolute":{"x":182.2626881166841,"y":327.78398627157037 },"dragging":false },{"id":"1747390395643_o4fg","type":"var","position":{"x":204.79782952572015,"y":161.375508766047 },"data":{"label":"变量赋值","type":"var","varName":"订单金额","varType":"float","expression":"123.23"},"width":132,"height":60,"selected":false,"positionAbsolute":{"x":204.79782952572015,"y":161.375508766047 },"dragging":false },{"id":"1747390397389_oeiv","type":"if","position":{"x":436.56211950045525,"y":160.72117011046424 },"data":{"label":"IF选择器","type":"if"},"width":90,"height":90,"selected":false,"positionAbsolute":{"x":436.56211950045525,"y":160.72117011046424 },"dragging":false },{"id":"1747390398971_o34r","type":"db_add","position":{"x":505.144966527779,"y":319.74771345347847 },"data":{"label":"新增数据","type":"db_add"},"width":100,"height":48,"selected":false,"positionAbsolute":{"x":505.144966527779,"y":319.74771345347847 },"dragging":false }],"edges":[{"source":"1747390390837_5387","sourceHandle":null,"target":"1747390395643_o4fg","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747390390837_5387-1747390395643_o4fg"},{"source":"1747390395643_o4fg","sourceHandle":null,"target":"1747390397389_oeiv","targetHandle":"left","markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747390395643_o4fg-1747390397389_oeivleft"},{"source":"1747390397389_oeiv","sourceHandle":"bottom","target":"1747390398971_o34r","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747390397389_oeivbottom-1747390398971_o34r"},{"source":"1747390398971_o34r","sourceHandle":null,"target":"1747390392236_u2uz","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747390398971_o34r-1747390392236_u2uz"}],"viewport":{"x":-55.24613335043858,"y":-42.839038680103556,"zoom":1.5283765207651665 }}',
+          循环引用: '{"nodes":[{"id":"start-1","type":"start","position":{"x":300,"y":100 },"data":{"label":"开始","type":"start","params":[]},"width":84,"height":74,"positionAbsolute":{"x":300,"y":100 }},{"id":"1747465997649_jmkj","type":"loop","position":{"x":356.11002387857246,"y":355.0640892569152 },"data":{"label":"循环","type":"loop","loopType":"count","loopVar":"a","subNodes":[],"subEdges":[],"loopCount":10 },"width":127,"height":70,"selected":false,"dragging":false,"positionAbsolute":{"x":356.11002387857246,"y":355.0640892569152 }},{"id":"1747466009169_hpvc","type":"loop","position":{"x":297.2161740597094,"y":220.25744429337686 },"data":{"label":"循环","type":"loop","loopType":"array","dataSource":"aaa","loopVar":"b","subNodes":[],"subEdges":[],"isRef":true },"width":155,"height":70,"selected":true,"positionAbsolute":{"x":297.2161740597094,"y":220.25744429337686 },"dragging":false },{"id":"1747466053837_i8xg","type":"end","position":{"x":255.501268466797,"y":520.9589360634164 },"data":{"label":"结束","type":"end"},"width":180,"height":128,"selected":false,"positionAbsolute":{"x":255.501268466797,"y":520.9589360634164 },"dragging":false },{"id":"1747466069867_b869","type":"var","position":{"x":129.7997218114283,"y":253.67863247242752 },"data":{"label":"变量赋值","type":"var","varName":"a","varType":"integer","expression":"1"},"width":120,"height":60,"selected":false,"positionAbsolute":{"x":129.7997218114283,"y":253.67863247242752 },"dragging":false },{"id":"1747466071908_zz9b","type":"var","position":{"x":149.13855455080176,"y":352.43303170795934 },"data":{"label":"变量赋值","type":"var","varName":"b","varType":"string","expression":"b"},"width":120,"height":60,"selected":false,"positionAbsolute":{"x":149.13855455080176,"y":352.43303170795934 },"dragging":false }],"edges":[{"source":"1747466009169_hpvc","sourceHandle":null,"target":"1747465997649_jmkj","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466009169_hpvc-1747465997649_jmkj"},{"source":"1747465997649_jmkj","sourceHandle":null,"target":"1747466053837_i8xg","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747465997649_jmkj-1747466053837_i8xg"},{"source":"start-1","sourceHandle":null,"target":"1747466069867_b869","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-start-1-1747466069867_b869"},{"source":"1747466069867_b869","sourceHandle":null,"target":"1747466071908_zz9b","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466069867_b869-1747466071908_zz9b"},{"source":"1747466071908_zz9b","sourceHandle":null,"target":"1747466009169_hpvc","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747466071908_zz9b-1747466009169_hpvc"}],"viewport":{"x":-79.25571034207292,"y":-116.00874586239581,"zoom":1.3085780714550097 }}',
+          数据库操作: '{"nodes":[{"id":"start-1","type":"start","position":{"x":260,"y":74 },"data":{"label":"开始","type":"start","params":[]},"width":84,"height":74,"selected":false,"positionAbsolute":{"x":260,"y":74 },"dragging":false },{"id":"1747475707305_tntj","type":"db_add","position":{"x":148.3345111796324,"y":231.64540386551892 },"data":{"label":"新增数据","type":"db_add","table":"yesapi_tea_order","fields":[{"field":"order_good_id","var":"a"}],"idVarName":"new_data_id"},"width":165,"height":101,"selected":false,"positionAbsolute":{"x":148.3345111796324,"y":231.64540386551892 },"dragging":false },{"id":"1747475734947_kzxc","type":"var","position":{"x":346.7938989584959,"y":178.64433966462997 },"data":{"label":"变量赋值","type":"var","varName":"a","varType":"string","expression":"123"},"width":136,"height":72,"selected":false,"positionAbsolute":{"x":346.7938989584959,"y":178.64433966462997 },"dragging":false },{"id":"1747475754010_ss5v","type":"end","position":{"x":455.8902542299918,"y":635.917937893529 },"data":{"label":"结束","type":"end","returnType":"var","outputVars":[{"varName":"one_order","value":"query_data"},{"varName":"list","value":"query_list"},{"varName":"totoal","value":"query_totoal"},{"varName":"delete","value":"delete_data_rows"}]},"width":219,"height":201,"positionAbsolute":{"x":455.8902542299918,"y":635.917937893529 },"selected":false,"dragging":false },{"id":"1747480907701_6bss","type":"db_update","position":{"x":195.28716799804215,"y":414.980750264076 },"data":{"label":"更新数据","type":"db_update","table":"yesapi_tea_order","where":[{"field":"id","op":"=","var":"new_data_id"}],"fields":[{"field":"order_goods","var":"order_goods"}],"updateResultVarName":"update_data_rows"},"width":212,"height":152,"selected":false,"positionAbsolute":{"x":195.28716799804215,"y":414.980750264076 },"dragging":false },{"id":"1747480998947_9hkv","type":"var","position":{"x":361.8127520048064,"y":317.09953271444954 },"data":{"label":"变量赋值","type":"var","varName":"order_goods","varType":"string","expression":"新 "},"width":167,"height":72,"selected":false,"positionAbsolute":{"x":361.8127520048064,"y":317.09953271444954 },"dragging":false },{"id":"1747485463867_7dza","type":"db_query","position":{"x":651.9763782045402,"y":188.60136012713212 },"data":{"label":"查询数据","type":"db_query","table":"yesapi_tea_order","queryType":"one","select":"id,order_goods","where":[{"field":"id","op":"=","var":"new_data_id"}],"resultVarName":"query_data"},"width":180,"height":154,"selected":true,"positionAbsolute":{"x":651.9763782045402,"y":188.60136012713212 },"dragging":false },{"id":"1747485643433_n359","type":"db_query","position":{"x":769.4870162251608,"y":409.80323820868244 },"data":{"label":"查询数据","type":"db_query","table":"yesapi_tea_order","queryType":"list","select":"*","where":[{"field":"id","op":">=","var":"new_data_id"}],"pageVarName":"page","pageSizeVarName":"page_size","listVarName":"query_list","totalVarName":"query_total"},"width":275,"height":173,"selected":false,"positionAbsolute":{"x":769.4870162251608,"y":409.80323820868244 },"dragging":false },{"id":"1747485840838_9vn3","type":"db_delete","position":{"x":735.3746074615113,"y":678.2653679093097 },"data":{"label":"删除数据","type":"db_delete","table":"yesapi_tea_order","where":[{"field":"id","op":">","var":"new_data_id"}],"deleteResultVarName":"delete_data_rows"},"width":206,"height":117,"selected":false,"positionAbsolute":{"x":735.3746074615113,"y":678.2653679093097 },"dragging":false }],"edges":[{"source":"start-1","sourceHandle":null,"target":"1747475734947_kzxc","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-start-1-1747475734947_kzxc"},{"source":"1747475734947_kzxc","sourceHandle":null,"target":"1747475707305_tntj","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747475734947_kzxc-1747475707305_tntj"},{"source":"1747475707305_tntj","sourceHandle":null,"target":"1747480998947_9hkv","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747475707305_tntj-1747480998947_9hkv"},{"source":"1747480998947_9hkv","sourceHandle":null,"target":"1747480907701_6bss","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747480998947_9hkv-1747480907701_6bss"},{"source":"1747480907701_6bss","sourceHandle":null,"target":"1747485463867_7dza","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747480907701_6bss-1747485463867_7dza"},{"source":"1747485463867_7dza","sourceHandle":null,"target":"1747485643433_n359","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747485463867_7dza-1747485643433_n359"},{"source":"1747485643433_n359","sourceHandle":null,"target":"1747485840838_9vn3","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747485643433_n359-1747485840838_9vn3"},{"source":"1747485840838_9vn3","sourceHandle":null,"target":"1747475754010_ss5v","targetHandle":null,"markerEnd":{"type":"arrowclosed"},"id":"reactflow__edge-1747485840838_9vn3-1747475754010_ss5v"}],"viewport":{"x":120.64181822193034,"y":3.6053098605102463,"zoom":0.6388317324345566 }}',
+        }
+        const json = jsonMap[file];
+        if (!json) {
+          throw new Error('Json数据不存在');
+        }
+        const obj = JSON.parse(json);
+        editor.setData(obj);
+        currentDemo = file;
+        renderDemoList();
+      } catch (e) {
+        alert('加载 Demo 失败: ' + e.message);
+      }
+    }
+
+    // 初始化流程编辑器
+    window.addEventListener('DOMContentLoaded', () => {
+      const EditorClass = window.ApiFlowVisualizer.default || window.ApiFlowVisualizer;
+      editor = new EditorClass({
+        container: document.getElementById('flow-editor'),
+        initialData: {},
+        onSave: (json) => { console.log('保存的数据:', json); },
+        onGenerateCode: (phpCode) => { console.log('生成的 PHP 代码:', phpCode); }
+      });
+      renderDemoList();
+      // 默认加载第一个 demo
+      if (demoFiles.length) loadDemo(demoFiles[0]);
+    });
+
+    // 导出 JSON
+    function exportJson() {
+      const json = editor.getJson();
+      const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = (currentDemo || 'yesapi-demo') + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // 导入 JSON（弹窗输入）
+    function importJson() {
+      const input = prompt('请粘贴 JSON 数据：');
+      if (!input) return;
+      try {
+        const obj = JSON.parse(input);
+        editor.setData(obj);
+      } catch (e) {
+        alert('JSON 格式错误！');
+      }
+    }
+
+    // 生成 PHP 代码
+    function generatePhpCode() {
+      const phpCode = editor.generatePhpCode();
+      // 可扩展为弹窗/下载等
+      console.log('生成的 PHP 代码:', phpCode);
+      alert('PHP代码已生成，控制台查看');
+    }
+  </script>
+</body>
+</html>
+

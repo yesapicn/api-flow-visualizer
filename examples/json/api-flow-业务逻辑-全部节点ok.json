@@ -1,0 +1,424 @@
+{
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "position": {
+        "x": 300,
+        "y": 100
+      },
+      "data": {
+        "label": "开始",
+        "type": "start",
+        "params": []
+      },
+      "width": 84,
+      "height": 74,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 100
+      }
+    },
+    {
+      "id": "1747465997649_jmkj",
+      "type": "loop",
+      "position": {
+        "x": 356.11002387857246,
+        "y": 355.0640892569152
+      },
+      "data": {
+        "label": "循环",
+        "type": "loop",
+        "loopType": "count",
+        "loopVar": "a",
+        "subNodes": [],
+        "subEdges": [],
+        "loopCount": 10
+      },
+      "width": 127,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 356.11002387857246,
+        "y": 355.0640892569152
+      }
+    },
+    {
+      "id": "1747466009169_hpvc",
+      "type": "loop",
+      "position": {
+        "x": 297.2161740597094,
+        "y": 220.25744429337686
+      },
+      "data": {
+        "label": "循环",
+        "type": "loop",
+        "loopType": "array",
+        "dataSource": "aaa",
+        "loopVar": "b",
+        "subNodes": [],
+        "subEdges": [],
+        "isRef": true
+      },
+      "width": 155,
+      "height": 70,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 297.2161740597094,
+        "y": 220.25744429337686
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747466053837_i8xg",
+      "type": "end",
+      "position": {
+        "x": 234.1039971760847,
+        "y": 554.5832195202502
+      },
+      "data": {
+        "label": "结束",
+        "type": "end"
+      },
+      "width": 180,
+      "height": 128,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 234.1039971760847,
+        "y": 554.5832195202502
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747466069867_b869",
+      "type": "var",
+      "position": {
+        "x": 64.84371967890871,
+        "y": 204.77058380794216
+      },
+      "data": {
+        "label": "变量赋值",
+        "type": "var",
+        "varName": "a",
+        "varType": "integer",
+        "expression": "1"
+      },
+      "width": 120,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 64.84371967890871,
+        "y": 204.77058380794216
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747466071908_zz9b",
+      "type": "var",
+      "position": {
+        "x": 71.19135199177822,
+        "y": 295.88310043964816
+      },
+      "data": {
+        "label": "变量赋值",
+        "type": "var",
+        "varName": "b",
+        "varType": "string",
+        "expression": "b"
+      },
+      "width": 120,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 71.19135199177822,
+        "y": 295.88310043964816
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747466916062_5s8p",
+      "type": "if",
+      "position": {
+        "x": 538.7491784383177,
+        "y": 435.37338939436336
+      },
+      "data": {
+        "label": "IF选择器",
+        "type": "if",
+        "condition": "$a > 0",
+        "ifTrue": "$a = 1;",
+        "ifFalse": "$a = false;"
+      },
+      "width": 90,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 538.7491784383177,
+        "y": 435.37338939436336
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747467780058_3iae",
+      "type": "var",
+      "position": {
+        "x": 68.3327070492083,
+        "y": 385.7779287561633
+      },
+      "data": {
+        "label": "变量赋值",
+        "type": "var",
+        "varName": "ff",
+        "varType": "float"
+      },
+      "width": 120,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 68.3327070492083,
+        "y": 385.7779287561633
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747467783873_jwap",
+      "type": "var",
+      "position": {
+        "x": 57.771403032675266,
+        "y": 495.83631404102834
+      },
+      "data": {
+        "label": "变量赋值",
+        "type": "var",
+        "varName": "boolean2",
+        "varType": "boolean",
+        "expression": "true"
+      },
+      "width": 172,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 57.771403032675266,
+        "y": 495.83631404102834
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747467786756_qm4a",
+      "type": "var",
+      "position": {
+        "x": 42.9099987564461,
+        "y": 593.7059931981469
+      },
+      "data": {
+        "label": "变量赋值",
+        "type": "var",
+        "varName": "arr",
+        "varType": "array"
+      },
+      "width": 120,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 42.9099987564461,
+        "y": 593.7059931981469
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747467789918_8e73",
+      "type": "var",
+      "position": {
+        "x": 13.274094449557367,
+        "y": 680.7053564140533
+      },
+      "data": {
+        "label": "变量赋值",
+        "type": "var",
+        "varName": "exxxxx",
+        "varType": "exp",
+        "expression": "1+2;"
+      },
+      "width": 131,
+      "height": 60,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 13.274094449557367,
+        "y": 680.7053564140533
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747468095018_psa6",
+      "type": "print_var",
+      "position": {
+        "x": -109.79174765206201,
+        "y": 591.526844834111
+      },
+      "data": {
+        "label": "打印变量",
+        "type": "print_var",
+        "varName": "arr"
+      },
+      "width": 120,
+      "height": 74,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -109.79174765206201,
+        "y": 591.526844834111
+      },
+      "dragging": false
+    },
+    {
+      "id": "1747468330612_uh4h",
+      "type": "code",
+      "position": {
+        "x": 473.82986007905436,
+        "y": 617.031436473301
+      },
+      "data": {
+        "label": "代码",
+        "type": "code",
+        "phpCode": "$aaa = 123;"
+      },
+      "width": 122,
+      "height": 82,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 473.82986007905436,
+        "y": 617.031436473301
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1747466009169_hpvc",
+      "sourceHandle": null,
+      "target": "1747465997649_jmkj",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747466009169_hpvc-1747465997649_jmkj"
+    },
+    {
+      "source": "start-1",
+      "sourceHandle": null,
+      "target": "1747466069867_b869",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-start-1-1747466069867_b869"
+    },
+    {
+      "source": "1747466069867_b869",
+      "sourceHandle": null,
+      "target": "1747466071908_zz9b",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747466069867_b869-1747466071908_zz9b"
+    },
+    {
+      "source": "1747465997649_jmkj",
+      "sourceHandle": null,
+      "target": "1747466916062_5s8p",
+      "targetHandle": "left",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747465997649_jmkj-1747466916062_5s8pleft"
+    },
+    {
+      "source": "1747466071908_zz9b",
+      "sourceHandle": null,
+      "target": "1747467780058_3iae",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747466071908_zz9b-1747467780058_3iae"
+    },
+    {
+      "source": "1747467780058_3iae",
+      "sourceHandle": null,
+      "target": "1747467783873_jwap",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747467780058_3iae-1747467783873_jwap"
+    },
+    {
+      "source": "1747467783873_jwap",
+      "sourceHandle": null,
+      "target": "1747467786756_qm4a",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747467783873_jwap-1747467786756_qm4a"
+    },
+    {
+      "source": "1747467789918_8e73",
+      "sourceHandle": null,
+      "target": "1747466009169_hpvc",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747467789918_8e73-1747466009169_hpvc"
+    },
+    {
+      "source": "1747467786756_qm4a",
+      "sourceHandle": null,
+      "target": "1747468095018_psa6",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747467786756_qm4a-1747468095018_psa6"
+    },
+    {
+      "source": "1747468095018_psa6",
+      "sourceHandle": null,
+      "target": "1747467789918_8e73",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747468095018_psa6-1747467789918_8e73"
+    },
+    {
+      "source": "1747466916062_5s8p",
+      "sourceHandle": null,
+      "target": "1747468330612_uh4h",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747466916062_5s8p-1747468330612_uh4h"
+    },
+    {
+      "source": "1747468330612_uh4h",
+      "sourceHandle": null,
+      "target": "1747466053837_i8xg",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747468330612_uh4h-1747466053837_i8xg"
+    }
+  ],
+  "viewport": {
+    "x": 258.4620801931548,
+    "y": -92.27872012983607,
+    "zoom": 0.9331476673922376
+  }
+}

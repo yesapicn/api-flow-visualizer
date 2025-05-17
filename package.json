@@ -1,0 +1,54 @@
+{
+  "name": "api-flow-visualizer",
+  "version": "1.0.0",
+  "description": "A powerful API flow visualization tool for developers",
+  "main": "dist/api-flow-visualizer.umd.js",
+  "module": "dist/api-flow-visualizer.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:lib": "vite build --config vite.lib.config.ts",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:npm": "npm run build:types && vite build --config vite.npm.config.ts",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build:npm"
+  },
+  "keywords": [
+    "api",
+    "flow",
+    "visualization",
+    "react",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "antd": "^5.0.0",
+    "@ant-design/icons": "^5.0.0",
+    "reactflow": "^11.0.0",
+    "dayjs": "^1.11.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "terser": "^5.39.2",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/api-flow-visualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/api-flow-visualizer/issues"
+  },
+  "homepage": "https://github.com/yourusername/api-flow-visualizer#readme"
+}

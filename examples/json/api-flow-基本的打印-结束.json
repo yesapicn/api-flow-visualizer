@@ -1,0 +1,109 @@
+{
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "position": {
+        "x": 300,
+        "y": 100
+      },
+      "data": {
+        "label": "开始",
+        "type": "start",
+        "params": [
+          {
+            "paramName": "aa",
+            "varName": "dd"
+          },
+          {
+            "paramName": "ee",
+            "varName": "ee"
+          }
+        ]
+      },
+      "width": 163,
+      "height": 142,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 100
+      }
+    },
+    {
+      "id": "1747410835384_61c6",
+      "type": "print_var",
+      "position": {
+        "x": 351.24699231099044,
+        "y": 276.71903060902696
+      },
+      "data": {
+        "label": "打印变量",
+        "type": "print_var",
+        "varName": "aa"
+      },
+      "width": 120,
+      "height": 74,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 351.24699231099044,
+        "y": 276.71903060902696
+      }
+    },
+    {
+      "id": "1747411125075_im2c",
+      "type": "end",
+      "position": {
+        "x": 418.55529676462663,
+        "y": 399.0192787543265
+      },
+      "data": {
+        "label": "结束",
+        "type": "end",
+        "returnType": "var",
+        "outputVars": [
+          {
+            "varName": "aa",
+            "value": "$a"
+          }
+        ]
+      },
+      "width": 180,
+      "height": 128,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 418.55529676462663,
+        "y": 399.0192787543265
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "start-1",
+      "sourceHandle": null,
+      "target": "1747410835384_61c6",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-start-1-1747410835384_61c6"
+    },
+    {
+      "source": "1747410835384_61c6",
+      "sourceHandle": null,
+      "target": "1747411125075_im2c",
+      "targetHandle": null,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "id": "reactflow__edge-1747410835384_61c6-1747411125075_im2c"
+    }
+  ],
+  "viewport": {
+    "x": 3.890648147141519,
+    "y": -41.53267094107639,
+    "zoom": 1.0059425945351026
+  }
+}
