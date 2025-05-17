@@ -1,7 +1,5 @@
 # API Flow Visualizer
 
-<div align="center">
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/api-flow-visualizer/pulls)
   
@@ -9,7 +7,6 @@
   
 > 本项目 99.9%的代码由AI（[Cursor](https://www.cursor.com/)编辑器）编写，可能是首个使用AI开发的开源前端项目。  
 
-</div>
 
 ## 在线演示Demo
 YesApi接口工作流可视化编排 Demo：https://www.yesapi.cn//api-flow/demo.html  
@@ -112,23 +109,12 @@ class ApiFlowVisualizer {
  - TODO：IF判断节点的可视化编排，支持画布嵌套以及PHP代码生成引擎的调整；
  - TODO：数据库操作联动动态的数据库表和表字段数据；
 
-## 🤝 贡献指南
-
-我们欢迎所有形式的贡献，无论是新功能、bug 修复还是文档改进。
-
-1. Fork 本仓库
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启一个 Pull Request
-
-## 📄 开源协议
-
-本项目基于 [MIT](./LICENSE) 协议开源。
-
 ## 👥 贡献者
 
-感谢所有为本项目做出贡献的开发者！
+感谢为本项目做出贡献的AI和开发者！
+
+小彩蛋：我和Cursor一起结对编程的”工作照“。  
+![](./cursor-with-dogstar.png)  
 
 <a href="https://github.com/yourusername/api-flow-visualizer/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=yourusername/api-flow-visualizer" />
@@ -137,8 +123,7 @@ class ApiFlowVisualizer {
 ## 📞 联系我们
 
 - 项目维护者：DogstarHuang
-- 邮箱：chanzonghuang@gmail.com
-- 微信：
+- 微信：dogstarhuang
 ![](./dogtarhuang.jpg)  
 
 ## ⭐ 支持我们
