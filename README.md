@@ -101,6 +101,26 @@ class ApiFlowVisualizer {
 - ESLint
 - Prettier
 
+## 📁 项目结构
+
+```bash
+api-flow-visualizer/
+├── src/                    # 源代码目录
+│   ├── components/         # React组件
+│   │   ├── FlowEditor/    # 流程编辑器主组件
+│   │   ├── NodeTypes/     # 各类节点组件
+│   │   └── Toolbar/       # 工具栏组件
+│   ├── hooks/             # 自定义React Hooks
+│   ├── utils/             # 工具函数
+│   ├── types/             # TypeScript类型定义
+│   └── constants/         # 常量定义
+├── public/                # 静态资源
+├── examples/              # 示例和文档图片
+├── dist/                  # 构建输出目录
+├── tests/                 # 测试文件
+└── package.json          # 项目配置文件
+```
+
 ## 🛠 项目开发计划
 
 > 站在巨人的肩膀上开源和创作：功能参考模仿 扣子coze工作流业务逻辑编排、落地应用 果创云YesApi低代码开发平台、AI开发 Cursor编辑器。  
@@ -115,7 +135,7 @@ class ApiFlowVisualizer {
 
 感谢为本项目做出贡献的AI和开发者！
 
-小彩蛋：我和Cursor一起结对编程的”工作照“。  
+> 小彩蛋：我和Cursor一起结对编程的"工作照"。  
 ![](./cursor-with-dogstar.png)  
 
 ## 📞 联系我们
