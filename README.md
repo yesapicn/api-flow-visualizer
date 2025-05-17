@@ -118,10 +118,6 @@ class ApiFlowVisualizer {
 小彩蛋：我和Cursor一起结对编程的”工作照“。  
 ![](./cursor-with-dogstar.png)  
 
-<a href="https://github.com/yourusername/api-flow-visualizer/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=yourusername/api-flow-visualizer" />
-</a>
-
 ## 📞 联系我们
 
 - 项目维护者：DogstarHuang
@@ -130,7 +126,7 @@ class ApiFlowVisualizer {
 
 ## ⭐ 支持我们
 
-如果这个项目对你有帮助，欢迎给我们一个 star ⭐️
+如果这个项目对你有帮助，欢迎给我们一个 star ⭐️ [Github](https://github.com/yesapicn/api-flow-visualizer) | [Gitee码云](https://gitee.com/dogstar/api-flow-visualizer) | [GitCode](https://gitcode.com/dogstarhuang/api-flow-visualizer)
 
 
 
