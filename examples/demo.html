@@ -16,7 +16,7 @@
     .demo-btn { width: 100%; padding: 8px 12px; border: none; background: #f2f4f8; color: #333; border-radius: 4px; cursor: pointer; text-align: left; transition: background 0.2s; font-size: 15px; }
     .demo-btn.active, .demo-btn:hover { background: #1890ff; color: #fff; }
     .main { flex: 1; display: flex; flex-direction: column; }
-    .header { padding: 18px 32px 10px 32px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; }
+    .header { padding: 18px 32px 10px 32px; background: #fff; border-bottom: 1px solid #eee; align-items: center; }
     .header h1 { font-size: 22px; margin: 0; color: #222; letter-spacing: 1px; }
     .actions { display: flex; gap: 12px; }
     .action-btn { padding: 7px 18px; border: none; border-radius: 4px; background: #1890ff; color: #fff; font-size: 15px; cursor: pointer; transition: background 0.2s; }
@@ -37,11 +37,12 @@
     <div class="main">
       <div class="header">
         <h1>YesApi接口工作流可视化编排 Demo</h1>
-        <!-- <div class="actions">
-          <button class="action-btn" onclick="exportJson()">导出JSON</button>
-          <button class="action-btn" onclick="importJson()">导入JSON</button>
-          <button class="action-btn" onclick="generatePhpCode()">生成PHP代码</button>
-        </div> -->
+        <div class="actions">
+          外部调用：
+          <button onclick="exportJson()">导出JSON</button>
+          <button onclick="importJson()">导入JSON</button>
+          <button onclick="generatePhpCode()">生成PHP代码</button>
+        </div>
       </div>
       <div id="flow-editor"></div>
     </div>
@@ -132,7 +133,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = (currentDemo || 'yesapi-demo') + '.json';
+      a.download = 'api-flow-visualizer.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

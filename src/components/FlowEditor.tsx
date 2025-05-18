@@ -125,137 +125,6 @@ const nodeTypes: Record<string, React.ComponentType<any>> = {
   print_var: PrintVarNode,
 };
 
-// 将 generatePhpCode 函数移到组件外部
-function generatePhpCode(flowJson: any): string {
-  if (!flowJson || !flowJson.nodes) return '';
-  const nodes = flowJson.nodes;
-  const edges = flowJson.edges || [];
-  const nodeMap = Object.fromEntries(nodes.map((n: any) => [n.id, n]));
-  const startNode = nodes.find((n: any) => n.type === 'start');
-  if (!startNode) return '// 未找到开始节点';
-
-  let code = '<?php\n';
-
-  // 处理开始节点参数
-  const paramsArr = (startNode.data?.params || []) as Array<{ paramName: string, varName: string }>;
-  code += 'function ($params, $di) {\n';
-  // 绑定变量名
-  paramsArr.forEach(p => {
-    if (p.varName) {
-      code += `    $${p.varName} = $params['${p.paramName}']; // 输入参数\n`;
-    }
-  });
-  let current = startNode;
-  const visited = new Set();
-  while (current && !visited.has(current.id)) {
-    code += '\n    /* 节点: ' + current.data.label + ' 开始 */\n';
-    visited.add(current.id);
-
-    // 处理变量节点
-    if (current.type === 'var') {
-      const v = current.data;
-      switch (v.varType) {
-        case 'string':
-          code += `    $${v.varName || '变量'} = ${v.expression ? "'" + v.expression + "'" :  "''"}; // ${v.label} \n`;
-          break;
-        case 'int':
-          code += `    $${v.varName || '变量'} = ${v.expression || 0}; // ${v.label} \n`;
-          break;
-        case 'array':
-          code += `    $${v.varName || '变量'} = ${v.expression || "[]"}; // ${v.label} \n`;
-          break;
-        case 'object':
-          code += `    $${v.varName || '变量'} = ${v.expression || "null"}; // ${v.label} \n`;
-          break;
-        case 'bool':
-          code += `    $${v.varName || '变量'} = ${v.expression || "false"}; // ${v.label} \n`;
-          break;
-        case 'float':
-          code += `    $${v.varName || '变量'} = ${v.expression || "0.0"}; // ${v.label} \n`;
-          break;
-        case 'null':
-          code += `    $${v.varName || '变量'} = null; // ${v.label} \n`;
-          break;
-        default:
-          code += `    $${v.varName || '变量'} = ${v.expression || "''"}; // ${v.label} \n`;
-          break;
-      }
-    }
-
-    // 处理打印变量节点
-    if (current.type === 'print_var') {
-      const v = current.data;
-      if (v && v.varName) {
-        code += `    yesapi_debug('${v.varName}:', $${v.varName}); // 打印变量\n`;
-      }
-    }
-    if (current.type === 'code') {
-      const v = current.data;
-      if (v && v.phpCode) {
-        code += '    ' + v.phpCode + '\n';
-      }
-    }
-
-    // 处理结束节点
-    if (current.type === 'end') {
-      const d = current.data || {};
-      if (d.returnType === 'var') {
-        if (Array.isArray(d.outputVars) && d.outputVars.length > 0) {
-          code += '    return [';
-          code += d.outputVars.map((v: any) => `\n        '${v.varName}'=>${v.value || "''"}`).join(',');
-          code += '\n    ];\n';
-        } else {
-          code += '    return [];\n';
-        }
-      } else if (d.returnType === 'text') {
-        code += `    return ${d.expression || "''"};\n`;
-      } else {
-        code += '    return [];\n';
-      }
-      break;
-    }
-
-    // 处理循环节点
-    if (current.type === 'loop') {
-      const v = current.data;
-      let loopCode = '';
-      if (v.loopType === 'array') {
-        loopCode += `    foreach ($${v.dataSource || '[]'} as ${v.isRef ? '&' : ''}$${v.loopVar || 'item'}) {\n`;
-      } else {
-        loopCode += `    for ($${v.loopVar || 'i'} = 0; $${v.loopVar || 'i'} < ${v.loopCount || 1}; $${v.loopVar || 'i'}++) {\n`;
-      }
-      // 直接插入循环体代码
-      if (v.loopBodyCode) {
-        loopCode += v.loopBodyCode.split('\n').map((line: string) => '        ' + line).join('\n') + '\n';
-      }
-      loopCode += '    }\n';
-      if (v.loopType === 'array' && v.isRef) {
-        loopCode += `    unset($${v.loopVar}); // 去掉引用\n`;
-      }
-      code += loopCode;
-    }
-
-    // 处理条件节点
-    if (current.type === 'if') {
-      const v = current.data;
-      code += `    if (${v.condition}) {\n`;
-      code += v.ifTrue.split('\n').map((line: string) => '        ' + line).join('\n') + '\n';
-      code += '    } else {\n';
-      code += v.ifFalse.split('\n').map((line: string) => '        ' + line).join('\n') + '\n';
-      code += '    }\n';
-    }
-
-    const outEdge = edges.find((e: any) => e.source === current.id);
-    if (outEdge) {
-      current = nodeMap[outEdge.target];
-    } else {
-      break;
-    }
-  }
-  code += '\n}';
-  return code;
-}
-
 const FlowEditor = forwardRef((props: FlowEditorProps, ref) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -428,7 +297,7 @@ const FlowEditor = forwardRef((props: FlowEditorProps, ref) => {
       return reactFlowInstance?.toObject() || { nodes, edges };
     },
     generatePhpCode: () => {
-      return generatePhpCode({ nodes, edges });
+      return PhpCodeEngine.generatePhpCode({ nodes, edges });
     },
     setFlowData: (json: any) => {
       if (json.nodes && json.edges) {
@@ -546,7 +415,7 @@ const FlowEditor = forwardRef((props: FlowEditorProps, ref) => {
           {selectedNode?.type === 'var' && <VarNodeConfig />}
           {selectedNode?.type === 'if' && <IfNodeConfig />}
           {selectedNode?.type === 'api' && <ApiNodeConfig />}
-          {selectedNode?.type === 'loop' && <LoopNodeConfig />}
+          {selectedNode?.type === 'loop' && <LoopNodeConfig form={form} initialValues={selectedNode?.data} />}
           {selectedNode?.type === 'code' && <CodeNodeConfig />}
           {selectedNode?.type === 'db_add' && <DbAddNodeConfig />}
           {selectedNode?.type === 'db_update' && <DbUpdateNodeConfig />}

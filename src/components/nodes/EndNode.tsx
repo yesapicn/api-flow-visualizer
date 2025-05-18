@@ -15,7 +15,7 @@ const EndNode = ({ data }: any) => {
               <thead><tr><th style={{ color: '#fff', fontWeight: 400 }}>字段名</th><th style={{ color: '#fff', fontWeight: 400 }}>变量名</th></tr></thead>
               <tbody>
                 {outputVars && outputVars.length > 0 ? outputVars.map((v: any, i: number) => (
-                  <tr key={i}><td style={{ color: '#fff' }}>{v.varName}</td><td style={{ color: '#fff' }}>{v.value}</td></tr>
+                  <tr key={i}><td style={{ color: '#fff' }}>{v.varName}</td><td style={{ color: '#fff' }}>${v.value}</td></tr>
                 )) : <tr><td colSpan={2} style={{ color: '#fff', opacity: 0.7 }}>无</td></tr>}
               </tbody>
             </table>

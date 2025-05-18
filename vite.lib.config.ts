@@ -19,6 +19,12 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM'
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') {
+            return 'api-flow-visualizer.css'
+          }
+          return assetInfo.name
         }
       }
     }

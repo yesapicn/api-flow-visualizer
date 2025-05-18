@@ -190,7 +190,7 @@ function generatePhpCode(flowJson: any): string {
       if (d.returnType === 'var') {
         if (Array.isArray(d.outputVars) && d.outputVars.length > 0) {
           code += '    return [';
-          code += d.outputVars.map((v: any) => `\n        '${v.varName}' => ${v.value || "''"}`).join(',');
+          code += d.outputVars.map((v: any) => `\n        '${v.varName}' => ${v.value ? "$" + v.value :  "''"}`).join(',');
           code += '\n    ];\n';
         } else {
           code += '    return [];\n';
@@ -259,5 +259,8 @@ const PhpCodeEngine: React.FC<EngineProps> = ({ flowJson }) => {
     </div>
   );
 };
+
+// 将 generatePhpCode 作为静态方法添加到组件上
+(PhpCodeEngine as any).generatePhpCode = generatePhpCode;
 
 export default PhpCodeEngine; 
