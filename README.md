@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/api-flow-visualizer/pulls)
   
-一个开源的 API 流程可视化编排组件，帮助开发者直观地可视化编排和管理 API 工作流逻辑，最终生成可支持的PHP代码。可以单独加载使用，并集成到你的项目中。
+一个开源的API接口流程可视化编排组件，可视化编排变量赋值、IF逻辑和循环控制以及数据库操作等，最终生成可运行的PHP后端代码（适配PhalApi格式）。可以单独加载使用，并集成到你的项目中。
   
 > 本项目 99.9%的代码由AI（[Cursor](https://www.cursor.com/)编辑器）编写，可能是首个使用AI开发的开源前端项目。  
 
