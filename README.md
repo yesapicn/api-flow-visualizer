@@ -26,6 +26,12 @@ YesApi接口工作流可视化编排 Demo：https://www.yesapi.cn//api-flow/demo
 循环引用：  
 ![](./examples/img/循环引用.png)  
 
+弹窗配置（以变量赋值为例）：  
+![](./examples/img/变量赋值-弹窗配置.png)  
+
+预览生成PHP代码：  
+![](./examples/img/生成预览PHP代码.png)  
+
 ## ✨ 核心特性
 
 - 🎨 可视化流程编排
